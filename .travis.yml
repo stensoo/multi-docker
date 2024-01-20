@@ -3,19 +3,19 @@ services:
   - docker
 
 before_install:
-  - docker build -t stensoo/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t stenso/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true stensoo/react-test npm test -- --coverage
+  - docker run -e CI=true stenso/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t stensoo/multi-client ./client
-  - docker build -t stensoo/multi-nginx ./nginx
-  - docker build -t stensoo/multi-server ./server
-  - docker build -t stensoo/multi-worker ./worker
+  - docker build -t stenso/multi-client ./client
+  - docker build -t stenso/multi-nginx ./nginx
+  - docker build -t stenso/multi-server ./server
+  - docker build -t stenso/multi-worker ./worker
   # login to docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push stensoo/multi-client
-  - docker push stensoo/multi-nginx
-  - docker push stensoo/multi-server
-  - docker push stensoo/multi-worker
+  - docker push stenso/multi-client
+  - docker push stenso/multi-nginx
+  - docker push stenso/multi-server
+  - docker push stenso/multi-worker
