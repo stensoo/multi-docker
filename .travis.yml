@@ -13,3 +13,9 @@ after_success:
   - docker build -t stensoo/multi-nginx ./nginx
   - docker build -t stensoo/multi-server ./server
   - docker build -t stensoo/multi-worker ./worker
+  # login to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push stensoo/multi-client
+  - docker push stensoo/multi-nginx
+  - docker push stensoo/multi-server
+  - docker push stensoo/multi-worker
