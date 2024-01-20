@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t stensoo/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true stensoo/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t stensoo/multi-client ./client
+  - docker build -t stensoo/multi-nginx ./nginx
+  - docker build -t stensoo/multi-server ./server
+  - docker build -t stensoo/multi-worker ./worker
